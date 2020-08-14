@@ -25,8 +25,6 @@
                     class="fas fa-search-location"></i></button>
         </div>
 
-        <!-- -->
-
         <nav class="nav flex-column" style="margin-bottom: 10px">
             <a class="nav-link border rounded" href="#"
                 style="background-color:white; color:gray; display:none">City</a>
@@ -48,7 +46,8 @@
 
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title font-weight-bold" id="currentCity"><p id="currentDay"></p></h4>
+            <h4 class="card-title font-weight-bold" id="currentCity">Atlanta (08/13/2020) <img
+                    src="http://openweathermap.org/img/wn/10d@2x.png"></img></h4>
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item border-0" id="currentTemperature"></li>
@@ -58,9 +57,9 @@
         </ul>
     </div>
 
-    <div style="margin-top:10px">
+    <div style="margin-top:10px float-right">
         <h4>5 Day Forecast</h4>
-        <div class="row" style="color:white ">
+        <div class="row" style="color:white">
             <div class="">
                 <div class="card" style="background-color: #007bff!important; margin:15px 15px 15px 0px">
                     <div class="card-body">
@@ -121,55 +120,25 @@
                         </li>
                 </div>
             </div>
-        </div>
 
-        
+
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="style.js"></script>
     <script type="text/javascript">
 
-        var APIKey = "83244185ec907e431bce5c00d753e3e9";
-        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="
-        var appId = "&appid="
-        var city = "Charlotte"
-        var currentCitySearch = queryURL + city + appId + APIKey;
-        var image = $("<img>").attr("src", "http://openweathermap.org/img/wn/10d@2x.png")
-        
 
         $.ajax({
-            url: currentCitySearch,
-            method: "GET"
-        }).then(function (response) {
-
-            console.log(response);
-            var k = (response.main.temp);
-            var f = (k - 273.15) * 1.80 + 32;
-            $("#currentCity").text(city + " " + moment().format(("(M/DD/YYYY)"))).append(image);
-            $("#currentTemperature").text("Temperature: " + f.toFixed(2) + " \u00B0" + "F");
-            $("#currentHumidity").text("Humidity: " + response.main.humidity + "%");
-            $("#currentWindSpeed").text("Wind Speed: " + response.wind.speed + " MPH");
-            var lat = response.coord.lat;
-            var lon = response.coord.lon;
-            $("#currentUVIndex").text("UV Index: ")
-
-            var queryURLUV = 'http://api.openweathermap.org/data/2.5/uvi?appid=' + APIKey + '&lat=' + lat + '&lon=' + lon
-        
-        $.ajax({
-            url: queryURLUV,
+            url: "api.openweathermap.org/data/2.5/forecast?q=charlotte&appid=83244185ec907e431bce5c00d753e3e9",
             method: "GET"
         }).then(function (response) {
             console.log(response);
 
-            $("#currentUVIndex").text("UV Index: " + response.value)
         });
-
-        });
-
     </script>
-    
+
 </body>
 
 </html>
