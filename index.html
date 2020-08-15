@@ -169,7 +169,7 @@
                 var lon = response.coord.lon;
                 $("#currentUVIndex").text("UV Index: ")
 
-                var queryURLUV = 'http://api.openweathermap.org/data/2.5/uvi?appid=' + APIKey + '&lat=' + lat + '&lon=' + lon
+                var queryURLUV = 'https://api.openweathermap.org/data/2.5/uvi?appid=' + APIKey + '&lat=' + lat + '&lon=' + lon
 
                 $.ajax({
                     url: queryURLUV,
@@ -180,7 +180,7 @@
                 });
 
             });
-            var forecast = "http://api.openweathermap.org/data/2.5/forecast?q="
+            var forecast = "https://api.openweathermap.org/data/2.5/forecast?q="
             $.ajax({
                 url: forecast + city + "&units=imperial" + appId + APIKey,
                 method: "GET"
@@ -253,7 +253,7 @@
                 var lon = response.coord.lon;
                 $("#currentUVIndex").text("UV Index: ")
 
-                var queryURLUV = 'http://api.openweathermap.org/data/2.5/uvi?appid=' + APIKey + '&lat=' + lat + '&lon=' + lon
+                var queryURLUV = 'https://api.openweathermap.org/data/2.5/uvi?appid=' + APIKey + '&lat=' + lat + '&lon=' + lon
 
                 $.ajax({
                     url: queryURLUV,
@@ -265,7 +265,7 @@
                 });
 
             });
-            var forecast = "http://api.openweathermap.org/data/2.5/forecast?q="
+            var forecast = "https://api.openweathermap.org/data/2.5/forecast?q="
             $.ajax({
                 url: forecast + city + "&units=imperial" + appId + APIKey,
                 method: "GET"
