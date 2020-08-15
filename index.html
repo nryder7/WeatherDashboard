@@ -19,36 +19,23 @@
     <div class="container col-4 float-left border bg-light">
         <p class="text-dark font-weight-bold">Search for a City:</p>
         <div class="input-group-append" style="width:80%">
-            <input type="text" class="form-control text-area">
-            <button type="button" class="btn btn-primary border border-primary"
+            <input type="text" id="cityInput" class="form-control text-area">
+            <button type="button" id="cityInputSearch" class="btn btn-primary border border-primary"
                 style=" border-width:1px !important; margin-bottom: 10px"><i
                     class="fas fa-search-location"></i></button>
         </div>
 
-        <!-- -->
-
-        <nav class="nav flex-column" style="margin-bottom: 10px">
-            <a class="nav-link border rounded" href="#"
-                style="background-color:white; color:gray; display:none">City</a>
-            <a class="nav-link border rounded" href="#"
-                style="background-color:white; color:gray; display:none">City</a>
-            <a class="nav-link border rounded" href="#"
-                style="background-color:white; color:gray; display:none">City</a>
-            <a class="nav-link border rounded" href="#"
-                style="background-color:white; color:gray; display:none">City</a>
-            <a class="nav-link border rounded" href="#" style="background-color:white; color:gray">City</a>
-            <a class="nav-link border rounded" href="#" style="background-color:white; color:gray">City</a>
-            <a class="nav-link border rounded" href="#" style="background-color:white; color:gray">City</a>
-            <a class="nav-link border rounded" href="#" style="background-color:white; color:gray">City</a>
-            <a class="nav-link border rounded" href="#" style="background-color:white; color:gray">City</a>
-            <a class="nav-link border rounded" href="#" style="background-color:white; color:gray">City</a>
-            <a class="nav-link" href="#" style="background-color:white; color:gray"></a>
+        <nav class="nav flex-column" id="recentCities" style="margin-bottom: 10px">
+            <!--<a class="nav-link border rounded" href="#" style="background-color:white; color:gray; display:none">City</a> -->
+            <!--<a class="nav-link" id ="0" href="#" style="background-color:white; color:gray"><span></span></a> -->
         </nav>
     </div>
 
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title font-weight-bold" id="currentCity"><p id="currentDay"></p></h4>
+            <h4 class="card-title font-weight-bold" id="currentCity">
+                <p id="currentDay"></p>
+            </h4>
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item border-0" id="currentTemperature"></li>
@@ -123,7 +110,7 @@
             </div>
         </div>
 
-        
+
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js">
@@ -131,45 +118,73 @@
     <script src="style.js"></script>
     <script type="text/javascript">
 
-        var APIKey = "83244185ec907e431bce5c00d753e3e9";
-        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="
-        var appId = "&appid="
-        var city = "Charlotte"
-        var currentCitySearch = queryURL + city + appId + APIKey;
-        var image = $("<img>").attr("src", "http://openweathermap.org/img/wn/10d@2x.png")
+        for (var i = 0; i < 10; i++) {
+            var recentCityLocalStorage = localStorage.getItem(i)
+            if (recentCityLocalStorage !== null) {
+                var setPastCities = $("<a>")
+                setPastCities.text(recentCityLocalStorage)
+                $("#recentCities").prepend(setPastCities)
+            }
+            else {
+                localStorage.setItem(i, "")
+            }
+        }
+
+        var j = 0
+        $("#cityInputSearch").on("click", function (event) {
+            event.preventDefault();
+            var city = $("#cityInput").val();
+            console.log(city);
+
+            var newImage = $("<a>");
+            newImage.text(city);
+            $("#recentCities").prepend(newImage);
+            localStorage.setItem(j, city);
+            j++
         
 
-        $.ajax({
-            url: currentCitySearch,
-            method: "GET"
-        }).then(function (response) {
 
-            console.log(response);
-            var k = (response.main.temp);
-            var f = (k - 273.15) * 1.80 + 32;
-            $("#currentCity").text(city + " " + moment().format(("(M/DD/YYYY)"))).append(image);
-            $("#currentTemperature").text("Temperature: " + f.toFixed(2) + " \u00B0" + "F");
-            $("#currentHumidity").text("Humidity: " + response.main.humidity + "%");
-            $("#currentWindSpeed").text("Wind Speed: " + response.wind.speed + " MPH");
-            var lat = response.coord.lat;
-            var lon = response.coord.lon;
-            $("#currentUVIndex").text("UV Index: ")
+            var APIKey = "83244185ec907e431bce5c00d753e3e9";
+            var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="
+            var appId = "&appid="
+            //var city = "Charlotte"
+            var currentCitySearch = queryURL + city + appId + APIKey;
+            var image = $("<img>").attr("src", "http://openweathermap.org/img/wn/10d@2x.png")
 
-            var queryURLUV = 'http://api.openweathermap.org/data/2.5/uvi?appid=' + APIKey + '&lat=' + lat + '&lon=' + lon
-        
-        $.ajax({
-            url: queryURLUV,
-            method: "GET"
-        }).then(function (response) {
-            console.log(response);
 
-            $("#currentUVIndex").text("UV Index: " + response.value)
-        });
+            $.ajax({
+                url: currentCitySearch,
+                method: "GET"
+            }).then(function (response) {
 
-        });
+                console.log(response);
+                var k = (response.main.temp);
+                var f = (k - 273.15) * 1.80 + 32;
+                $("#currentCity").text(city + " " + moment().format(("(M/DD/YYYY)"))).append(image);
+                $("#currentTemperature").text("Temperature: " + f.toFixed(2) + " \u00B0" + "F");
+                $("#currentHumidity").text("Humidity: " + response.main.humidity + "%");
+                $("#currentWindSpeed").text("Wind Speed: " + response.wind.speed + " MPH");
+                var lat = response.coord.lat;
+                var lon = response.coord.lon;
+                $("#currentUVIndex").text("UV Index: ")
+
+                var queryURLUV = 'http://api.openweathermap.org/data/2.5/uvi?appid=' + APIKey + '&lat=' + lat + '&lon=' + lon
+
+                $.ajax({
+                    url: queryURLUV,
+                    method: "GET"
+                }).then(function (response) {
+                    console.log(response);
+
+                    $("#currentUVIndex").text("UV Index: " + response.value)
+                });
+
+            });
+        })
+
 
     </script>
-    
+
 </body>
 
 </html>
