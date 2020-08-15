@@ -46,65 +46,65 @@
     </div>
 
     <div style="margin-top:10px">
-        <h4>5 Day Forecast</h4>
+        <h4 class="forecast">5 Day Forecast</h4>
         <div class="row" style="color:white ">
             <div class="">
                 <div class="card" style="background-color: #007bff!important; margin:15px 15px 15px 0px">
                     <div class="card-body">
-                        <p class="card-text font-weight-bold">08/14/2020</p>
+                        <p id ="futureDate1" class="card-text font-weight-bold"></p>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item border-0" style="background-color: #007bff!important">Temp: 86.84* F
+                        <li id="temp1" class="list-group-item border-0" style="background-color: #007bff!important">
                         </li>
-                        <li class="list-group-item border-0" style="background-color: #007bff!important">Humidity: 33%
+                        <li id="humid1" class="list-group-item border-0" style="background-color: #007bff!important">
                         </li>
                 </div>
             </div>
             <div class="">
                 <div class="card" style="background-color: #007bff!important; margin:15px 15px 15px 0px">
                     <div class="card-body">
-                        <p class="card-text font-weight-bold">08/14/2020</p>
+                        <p id ="futureDate2" class="card-text font-weight-bold"></p>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item border-0" style="background-color: #007bff!important">Temp: 86.84* F
+                        <li id ="temp2" class="list-group-item border-0" style="background-color: #007bff!important">
                         </li>
-                        <li class="list-group-item border-0" style="background-color: #007bff!important">Humidity: 33%
+                        <li id="humid2" class="list-group-item border-0" style="background-color: #007bff!important">
                         </li>
                 </div>
             </div>
             <div class="">
                 <div class="card" style="background-color: #007bff!important; margin:15px 15px 15px 0px">
                     <div class="card-body">
-                        <p class="card-text font-weight-bold">08/14/2020</p>
+                        <p id ="futureDate3" class="card-text font-weight-bold"></p>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item border-0" style="background-color: #007bff!important">Temp: 86.84* F
+                        <li id ="temp3" class="list-group-item border-0" style="background-color: #007bff!important">
                         </li>
-                        <li class="list-group-item border-0" style="background-color: #007bff!important">Humidity: 33%
+                        <li id="humid3" class="list-group-item border-0" style="background-color: #007bff!important">
                         </li>
                 </div>
             </div>
             <div class="">
                 <div class="card" style="background-color: #007bff!important; margin:15px 15px 15px 0px">
                     <div class="card-body">
-                        <p class="card-text font-weight-bold">08/14/2020</p>
+                        <p id ="futureDate4"class="card-text font-weight-bold"></p>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item border-0" style="background-color: #007bff!important">Temp: 86.84* F
+                        <li id ="temp4" class="list-group-item border-0" style="background-color: #007bff!important">
                         </li>
-                        <li class="list-group-item border-0" style="background-color: #007bff!important">Humidity: 33%
+                        <li id="humid4" class="list-group-item border-0" style="background-color: #007bff!important">
                         </li>
                 </div>
             </div>
             <div class="">
                 <div class="card" style="background-color: #007bff!important; margin:15px 0px 15px 0px">
                     <div class="card-body">
-                        <p class="card-text font-weight-bold">08/14/2020</p>
+                        <p id ="futureDate5" class="card-text font-weight-bold"></p>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item border-0" style="background-color: #007bff!important">Temp: 86.84* F
+                        <li id ="temp5" class="list-group-item border-0" style="background-color: #007bff!important">
                         </li>
-                        <li class="list-group-item border-0" style="background-color: #007bff!important">Humidity: 33%
+                        <li id="humid5" class="list-group-item border-0" style="background-color: #007bff!important">
                         </li>
                 </div>
             </div>
@@ -121,36 +121,119 @@
         for (var i = 0; i < 10; i++) {
             var recentCityLocalStorage = localStorage.getItem(i)
             if (recentCityLocalStorage !== null) {
-                var setPastCities = $("<a>")
+                var setPastCities = $("<button>")
                 setPastCities.text(recentCityLocalStorage)
+                setPastCities.attr("value", recentCityLocalStorage)
+                //setPastCities.attr("value", recentCityLocalStorage)
+                //setPastCities.attr("value", i)
                 $("#recentCities").prepend(setPastCities)
             }
-            else {
-                localStorage.setItem(i, "")
-            }
+            // else {
+            //     localStorage.setItem(i, "")
+            // }
         }
+
 
         var j = 0
         $("#cityInputSearch").on("click", function (event) {
+                
             event.preventDefault();
             var city = $("#cityInput").val();
-            console.log(city);
-
-            var newImage = $("<a>");
-            newImage.text(city);
-            $("#recentCities").prepend(newImage);
+            var newCity = $("<button>");
+            newCity.text(city);
+            //newCity.attr("data-city", city);
+            $("#recentCities").prepend(newCity);
             localStorage.setItem(j, city);
             j++
-        
-
 
             var APIKey = "83244185ec907e431bce5c00d753e3e9";
             var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="
             var appId = "&appid="
             //var city = "Charlotte"
             var currentCitySearch = queryURL + city + appId + APIKey;
-            var image = $("<img>").attr("src", "http://openweathermap.org/img/wn/10d@2x.png")
+            //var image = $("<img>").attr("src", "http://openweathermap.org/img/wn/10d@2x.png")
 
+
+            $.ajax({
+                url: currentCitySearch,
+                method: "GET"
+            }).then(function (response) {
+
+                var k = (response.main.temp);
+                var f = (k - 273.15) * 1.80 + 32;
+                $("#currentCity").text(city + " " + moment().format(("(M/DD/YYYY)")));
+                $("#currentTemperature").text("Temperature: " + f.toFixed(2) + " \u00B0" + "F");
+                $("#currentHumidity").text("Humidity: " + response.main.humidity + "%");
+                $("#currentWindSpeed").text("Wind Speed: " + response.wind.speed + " MPH");
+                var lat = response.coord.lat;
+                var lon = response.coord.lon;
+                $("#currentUVIndex").text("UV Index: ")
+
+                var queryURLUV = 'http://api.openweathermap.org/data/2.5/uvi?appid=' + APIKey + '&lat=' + lat + '&lon=' + lon
+
+                $.ajax({
+                    url: queryURLUV,
+                    method: "GET"
+                }).then(function (response) {
+
+                    $("#currentUVIndex").text("UV Index: " + response.value)
+                });
+
+            });
+            var forecast = "http://api.openweathermap.org/data/2.5/forecast?q="
+            $.ajax({
+                url: forecast + city + "&units=imperial" + appId + APIKey,
+                method: "GET"
+            }).then(function (response) {
+                var todayDate = moment().format('M/DD/YYYY');
+                var future1 = $("#futureDate1")
+                var future2 = $("#futureDate2")
+                var future3 = $("#futureDate3")
+                var future4 = $("#futureDate4")
+                var future5 = $("#futureDate5")
+
+                future1.text(moment().add(1, 'd'));
+                future2.text(moment().add(2, 'd'));
+                future3.text(moment().add(3, 'd'));
+                future4.text(moment().add(4, 'd'));
+                future5.text(moment().add(5, 'd'));
+
+                var temp1 = (response.list[4].main.temp);
+                var temp2 =  (response.list[11].main.temp);
+                var temp3 =  (response.list[19].main.temp);
+                var temp4 =  (response.list[27].main.temp);
+                var temp5 =  (response.list[35].main.temp);
+
+                var humid1 = (response.list[4].main.humidity);
+                var humid2 =  (response.list[11].main.humidity);
+                var humid3 =  (response.list[19].main.humidity);
+                var humid4 =  (response.list[27].main.humidity);
+                var humid5 =  (response.list[35].main.humidity);
+                
+                $("#temp1").text("Temp: " + temp1 + " \u00B0" + "F");
+                $("#temp2").text("Temp: " + temp2 + " \u00B0" + "F");
+                $("#temp3").text("Temp: " + temp3 + " \u00B0" + "F");
+                $("#temp4").text("Temp: " + temp4 + " \u00B0" + "F");
+                $("#temp5").text("Temp: " + temp5 + " \u00B0" + "F");
+
+                $("#humid1").text("Humidity: " + humid1 + "%");
+                $("#humid2").text("Humidity: " + humid2 + "%");
+                $("#humid3").text("Humidity: " + humid3 + "%");
+                $("#humid4").text("Humidity: " + humid4 + "%");
+                $("#humid5").text("Humidity: " + humid5 + "%");
+
+            });
+        })
+
+        $("#recentCities").on("click", function (recent) {
+            recent.stopPropagation()
+            var city = recent.target.getAttribute("value");
+            var APIKey = "83244185ec907e431bce5c00d753e3e9";
+            var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="
+            var appId = "&appid="
+            //var city = "Charlotte"
+            var currentCitySearch = queryURL + city + appId + APIKey;
+            //var image = $("<img>").attr("src", "http://openweathermap.org/img/wn/10d@2x.png")
 
             $.ajax({
                 url: currentCitySearch,
@@ -160,7 +243,7 @@
                 console.log(response);
                 var k = (response.main.temp);
                 var f = (k - 273.15) * 1.80 + 32;
-                $("#currentCity").text(city + " " + moment().format(("(M/DD/YYYY)"))).append(image);
+                $("#currentCity").text(city + " " + moment().format(("(M/DD/YYYY)")));
                 $("#currentTemperature").text("Temperature: " + f.toFixed(2) + " \u00B0" + "F");
                 $("#currentHumidity").text("Humidity: " + response.main.humidity + "%");
                 $("#currentWindSpeed").text("Wind Speed: " + response.wind.speed + " MPH");
@@ -180,7 +263,52 @@
                 });
 
             });
+            var forecast = "http://api.openweathermap.org/data/2.5/forecast?q="
+            $.ajax({
+                url: forecast + city + "&units=imperial" + appId + APIKey,
+                method: "GET"
+            }).then(function (response) {
+                var todayDate = moment().format('M/DD/YYYY');
+                var future1 = $("#futureDate1")
+                var future2 = $("#futureDate2")
+                var future3 = $("#futureDate3")
+                var future4 = $("#futureDate4")
+                var future5 = $("#futureDate5")
+
+                future1.text(moment().add(1, 'd'));
+                future2.text(moment().add(2, 'd'));
+                future3.text(moment().add(3, 'd'));
+                future4.text(moment().add(4, 'd'));
+                future5.text(moment().add(5, 'd'));
+
+                var temp1 = (response.list[4].main.temp);
+                var temp2 =  (response.list[11].main.temp);
+                var temp3 =  (response.list[19].main.temp);
+                var temp4 =  (response.list[27].main.temp);
+                var temp5 =  (response.list[35].main.temp);
+
+                var humid1 = (response.list[4].main.humidity);
+                var humid2 =  (response.list[11].main.humidity);
+                var humid3 =  (response.list[19].main.humidity);
+                var humid4 =  (response.list[27].main.humidity);
+                var humid5 =  (response.list[35].main.humidity);
+                
+                $("#temp1").text("Temp: " + temp1 + " \u00B0" + "F");
+                $("#temp2").text("Temp: " + temp2 + " \u00B0" + "F");
+                $("#temp3").text("Temp: " + temp3 + " \u00B0" + "F");
+                $("#temp4").text("Temp: " + temp4 + " \u00B0" + "F");
+                $("#temp5").text("Temp: " + temp5 + " \u00B0" + "F");
+
+                $("#humid1").text("Humidity: " + humid1 + "%");
+                $("#humid2").text("Humidity: " + humid2 + "%");
+                $("#humid3").text("Humidity: " + humid3 + "%");
+                $("#humid4").text("Humidity: " + humid4 + "%");
+                $("#humid5").text("Humidity: " + humid5 + "%");
+
+            });
         })
+
+
 
 
     </script>
